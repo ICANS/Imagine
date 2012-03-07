@@ -183,7 +183,7 @@ class Image implements ImageInterface
             $this->gmagick->resizeimage(
                 $size->getWidth(),
                 $size->getHeight(),
-                \Gmagick::FILTER_UNDEFINED,
+                \Gmagick::FILTER_LANCZOS,
                 1
             );
         } catch (\GmagickException $e) {
@@ -257,6 +257,9 @@ class Image implements ImageInterface
     {
         try {
             $this->gmagick->setimageformat($format);
+            if (isset($options['quality'])) {
+                $this->gmagick->setcompressionquality($options['quality']);
+            }
         } catch (\GmagickException $e) {
             throw new RuntimeException(
                 'Show operation failed', $e->getCode(), $e
