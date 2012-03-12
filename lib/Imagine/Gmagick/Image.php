@@ -226,7 +226,9 @@ class Image implements ImageInterface
             if (isset($options['format'])) {
                 $this->gmagick->setimageformat($options['format']);
             }
-
+            if (isset($options['quality'])) {
+                $this->gmagick->setcompressionquality($options['quality']);
+            }
             $this->gmagick->writeimage($path);
         } catch (\GmagickException $e) {
             throw new RuntimeException(
